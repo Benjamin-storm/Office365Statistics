@@ -19,3 +19,7 @@ https://blog.qmatteoq.com/the-mvvm-pattern-design-time-data/
 https://stackoverflow.com/questions/18087906/use-mvvm-lights-messenger-to-pass-values-between-view-model
 
 https://stackoverflow.com/questions/29469151/mvvm-light-messenger-only-works-if-i-manually-instantiate-viewmodel
+
+https://developer.microsoft.com/en-us/graph/docs/concepts/v1-overview
+
+https://docs.microsoft.com/en-us/windows/uwp/design/style/segoe-ui-symbol-font
