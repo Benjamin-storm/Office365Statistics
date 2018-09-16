@@ -1,3 +1,9 @@
+# Introduction
+
+This project was created with the sole purpose of learning how to integrate a MVVM UWP application with the Microsoft Graph API, therefore being able to contact Office 365.
+
+## Used articles
+
 https://wp.qmatteoq.com/?p=6480
 
 https://wp.qmatteoq.com/?p=6484
