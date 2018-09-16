@@ -2,6 +2,14 @@
     x:Class="Office365Statistics.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Office365Statistics">
+    xmlns:local="using:Office365Statistics"
+    xmlns:viewModel="using:Office365Statistics.ViewModel">
+
+    <Application.Resources>
+        <!-- Add your client id here. -->
+        <x:String x:Key="ida:ClientID">6f69ab7c-b8a3-4c19-858b-291d6bcde56a</x:String>
+        <x:String x:Key="ida:ReturnUrl">urn:ietf:wg:oauth:2.0:oob</x:String>
+        <viewModel:ViewModelLocator x:Key="ViewModelLocator" />
+    </Application.Resources>
 
 </Application>

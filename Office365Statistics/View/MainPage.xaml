@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Office365Statistics.MainPage"
+    x:Class="Office365Statistics.View.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Office365Statistics"
@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <TextBlock Text="Welcome to my first UWP test project. Enjoy!" FontSize="54" Foreground="Black"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Page>
