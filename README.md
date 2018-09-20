@@ -2,7 +2,18 @@
 
 This project was created with the sole purpose of learning how to integrate a MVVM UWP application with the Microsoft Graph API, therefore being able to contact Office 365.
 
-## Used articles
+# Missing
+- Recursive call to Graph API to get all nested files
+- Attempt authentication on load
+- Implement loading for authentication and reports (as part of the CanExecute flow)
+- Make Welcome text responsive
+
+## Maybe will add:
+- Add User card in the authentication page after the user has authenticated
+- More statistics/charts related to different Excel products
+- Unit tests
+
+# Used articles
 
 https://wp.qmatteoq.com/?p=6480
 

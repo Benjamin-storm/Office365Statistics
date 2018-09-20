@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Graph;
+using Office365Statistics.Model;
 using Office365Statistics.Services;
 using Office365Statistics.Services.Contracts;
 
@@ -30,34 +31,71 @@ namespace Office365Statistics.ViewModel
             set { Set(ref _client, value); }
         }
 
-        private long _numberOfFiles;
-        public long NumberOfFiles
+        private int _numberOfFiles;
+        public int NumberOfFiles
         {
             get { return _numberOfFiles; }
             set { Set(ref _numberOfFiles, value); }
         }
 
-        private RelayCommand _getNumberOfFiles;
-        public RelayCommand GetNumberOfFiles
+        private int _numberOfRecentFiles;
+        public int NumberOfRecentFiles
+        {
+            get { return _numberOfRecentFiles; }
+            set { Set(ref _numberOfRecentFiles, value); }
+        }
+
+        private int _numberOfSharedWithMeFiles;
+        public int NumberOfSharedWithMeFiles
+        {
+            get { return _numberOfSharedWithMeFiles; }
+            set { Set(ref _numberOfSharedWithMeFiles, value); }
+        }
+
+        private List<NameValueItem> _filesChartData;
+        public List<NameValueItem> FilesChartData
+        {
+            get { return _filesChartData; }
+            set { Set(ref _filesChartData, value); }
+        }
+
+        private RelayCommand _updateFilesChartData;
+        public RelayCommand UpdateFilesChartData
         {
             get
             {
-                if (_getNumberOfFiles == null)
+                if (_updateFilesChartData == null)
                 {
-                    _getNumberOfFiles = new RelayCommand(async () =>
+                    _updateFilesChartData = new RelayCommand(async () =>
                     {
                         if (Client != null)
                         {
-                            this.NumberOfFiles = await this._statisticsService.GetNumberOfFiles(Client);
+                            this.NumberOfRecentFiles = await this._statisticsService.GetNumberOfRecentFiles(Client);
+                            this.NumberOfSharedWithMeFiles = await this._statisticsService.GetNumberOfSharedWithMeFiles(Client);
+                            this.NumberOfFiles = (int)await this._statisticsService.GetNumberOfFiles(Client);
                         }
-                        else
+
+                        this.FilesChartData = new List<NameValueItem>
                         {
-                            this.NumberOfFiles = 0;
-                        }
+                            new NameValueItem
+                            {
+                                Name = "Recent files",
+                                Value = this.NumberOfRecentFiles
+                            },
+                            new NameValueItem
+                            {
+                                Name = "Shared with me files",
+                                Value = this.NumberOfSharedWithMeFiles
+                            }, new NameValueItem
+                            {
+                                Name = "All files",
+                                Value = this.NumberOfFiles
+                            }
+                        };
                     });
                 }
 
-                return _getNumberOfFiles;
+                return _updateFilesChartData;
             }
         }
     }
