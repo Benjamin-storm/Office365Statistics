@@ -5,7 +5,6 @@ This project was created with the sole purpose of learning how to integrate a MV
 # Missing
 - Recursive call to Graph API to get all nested files
 - Attempt authentication on load
-- Make Welcome text responsive
 
 ## Maybe will add:
 - Add User card in the authentication page after the user has authenticated
@@ -34,3 +33,7 @@ https://stackoverflow.com/questions/29469151/mvvm-light-messenger-only-works-if-
 https://developer.microsoft.com/en-us/graph/docs/concepts/v1-overview
 
 https://docs.microsoft.com/en-us/windows/uwp/design/style/segoe-ui-symbol-font
+
+https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro
+
+https://docs.microsoft.com/en-us/windows/uwp/design/layout/layouts-with-xaml

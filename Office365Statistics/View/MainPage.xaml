@@ -10,6 +10,6 @@
 
     <Grid>
         <TextBlock Text="Welcome to my first UWP test project. Enjoy!" FontSize="54" Foreground="Black"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                           HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWholeWords"/>
     </Grid>
 </Page>
