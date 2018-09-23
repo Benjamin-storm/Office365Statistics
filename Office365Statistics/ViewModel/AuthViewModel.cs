@@ -14,6 +14,17 @@ namespace Office365Statistics.ViewModel
             _authService = authService;
         }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                Set(ref _isLoading, value);
+                AuthenticateUser.RaiseCanExecuteChanged();
+            }
+        }
+
         private GraphServiceClient _client;
         public GraphServiceClient Client
         {
@@ -48,6 +59,8 @@ namespace Office365Statistics.ViewModel
                 {
                     _authenticateUser = new RelayCommand(async () =>
                     {
+                        this.IsLoading = true;
+
                         try
                         {
                             Client = _authService.GetAuthenticatedClient();
@@ -63,8 +76,10 @@ namespace Office365Statistics.ViewModel
                             IsAuthenticated = false;
                         }
 
+                        this.IsLoading = false;
+
                     },
-                    () => !this.IsAuthenticated);
+                    () => !this.IsAuthenticated && !this.IsLoading);
                 }
 
                 return _authenticateUser;

@@ -20,8 +20,17 @@ namespace Office365Statistics.ViewModel
         public ReportViewModel(IStatisticsService statisticsService)
         {
             _statisticsService = statisticsService;
-
+            
             MessengerInstance.Register<PropertyChangedMessage<GraphServiceClient>>(this, (property) => this.Client = property.NewValue);
+        }
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { Set(ref _isLoading, value);
+                this.UpdateFilesChartData.RaiseCanExecuteChanged();
+            }
         }
 
         private GraphServiceClient _client;
@@ -68,6 +77,8 @@ namespace Office365Statistics.ViewModel
                 {
                     _updateFilesChartData = new RelayCommand(async () =>
                     {
+                        this.IsLoading = true;
+
                         if (Client != null)
                         {
                             this.NumberOfRecentFiles = await this._statisticsService.GetNumberOfRecentFiles(Client);
@@ -92,7 +103,9 @@ namespace Office365Statistics.ViewModel
                                 Value = this.NumberOfFiles
                             }
                         };
-                    });
+
+                        this.IsLoading = false;
+                    }, () => !this.IsLoading);
                 }
 
                 return _updateFilesChartData;

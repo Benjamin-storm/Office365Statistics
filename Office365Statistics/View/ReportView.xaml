@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Report}">
-    
+
     <i:Interaction.Behaviors>
         <ic:EventTriggerBehavior EventName="Loaded">
             <ic:EventTriggerBehavior.Actions>
@@ -19,34 +19,37 @@
             </ic:EventTriggerBehavior.Actions>
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
-   
-    <Grid>
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-            <FlipView
-            x:Name="ChartsList"
-            Grid.Row="1"
-            Grid.Column="1">
-                <charting:Chart
-                x:Name="FilesCHart"
+
+    <RelativePanel>
+
+        <charting:Chart
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True"
+            RelativePanel.AlignVerticalCenterWithPanel="True"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.AlignRightWith="ReloadCharts"
+                x:Name="FilesChart"
                 Title="Files information"
                 Margin="70,0">
-                    <charting:Chart.Series>
-                        <Series:PieSeries
+            <charting:Chart.Series>
+                <Series:PieSeries
                         Title="Population"
                         ItemsSource="{Binding Path=FilesChartData}"
                         IndependentValueBinding="{Binding Name}"
                         DependentValueBinding="{Binding Value}"
                         IsSelectionEnabled="True" />
-                    </charting:Chart.Series>
-                </charting:Chart>
-            </FlipView>
-            <Button 
-                Content="Reload" 
+            </charting:Chart.Series>
+        </charting:Chart>
+
+        <Button 
+            RelativePanel.AlignRightWithPanel="True"
+            x:Name="ReloadCharts"
+            FontFamily="Segoe MDL2 Assets" 
+            Content="&#xE72C;"
+            Padding="10"
                 FontSize="54" 
                 Foreground="Black"
                 Command="{Binding Path=UpdateFilesChartData}"/>
-        </StackPanel>
-    </Grid>
+    </RelativePanel>
 </Page>
