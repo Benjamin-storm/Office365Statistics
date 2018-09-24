@@ -24,7 +24,7 @@
 
         // Get an access token for the given context and resourceId. An attempt is first made to 
         // acquire the token silently. If that fails, then we try to acquire the token by prompting the user.
-        public GraphServiceClient GetAuthenticatedClient()
+        public GraphServiceClient GetAuthenticatedClient(bool displayAuthPopup = true)
         {
             if (graphClient == null)
             {
@@ -36,12 +36,14 @@
                         new DelegateAuthenticationProvider(
                             async (requestMessage) =>
                             {
-                                var token = await GetTokenForUserAsync();
-                                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token);
+                                var token = await GetTokenForUserAsync(displayAuthPopup);
+                                if (!string.IsNullOrEmpty(token))
+                                {
+                                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token);
+                                }
                             }));
                     return graphClient;
                 }
-
                 catch (Exception ex)
                 {
                     Debug.WriteLine("Could not create a graph client: " + ex.Message);
@@ -56,7 +58,7 @@
         /// Get Token for User.
         /// </summary>
         /// <returns>Token for user.</returns>
-        public async Task<string> GetTokenForUserAsync()
+        public async Task<string> GetTokenForUserAsync(bool displayAuthPopup)
         {
             AuthenticationResult authResult;
             try
@@ -65,10 +67,9 @@
                 authResult = await IdentityClientApp.AcquireTokenSilentAsync(Scopes, accounts.First());
                 TokenForUser = authResult.AccessToken;
             }
-
             catch (Exception)
             {
-                if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
+                if (displayAuthPopup && (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5)))
                 {
                     authResult = await IdentityClientApp.AcquireTokenAsync(Scopes);
 

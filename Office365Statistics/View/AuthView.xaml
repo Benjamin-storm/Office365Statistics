@@ -8,11 +8,20 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button Content="Authenticate" 
+        <StackPanel VerticalAlignment="Center">
+            <Button Content="Authenticate" 
                 FontSize="54" 
                 Foreground="Black"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Command="{Binding Path=AuthenticateUser}"/>
+
+            <Button Content="Sign out" 
+                FontSize="54" 
+                Foreground="Black"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding Path=SignOutUser}"/>
+        </StackPanel>
     </Grid>
 </Page>

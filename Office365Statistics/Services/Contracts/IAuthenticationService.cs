@@ -5,9 +5,9 @@ namespace Office365Statistics.Services.Contracts
 {
     public interface IAuthenticationService
     {
-        GraphServiceClient GetAuthenticatedClient();
+        GraphServiceClient GetAuthenticatedClient(bool displayAuthPopup = true);
 
-        Task<string> GetTokenForUserAsync();
+        Task<string> GetTokenForUserAsync(bool displayAuthPopup);
 
         void SignOut();
     }

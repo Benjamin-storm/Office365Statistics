@@ -4,7 +4,6 @@ This project was created with the sole purpose of learning how to integrate a MV
 
 # Missing
 - Recursive call to Graph API to get all nested files
-- Attempt authentication on load
 
 ## Maybe will add:
 - Add User card in the authentication page after the user has authenticated

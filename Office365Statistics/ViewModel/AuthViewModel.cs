@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Graph;
 using Office365Statistics.Services.Contracts;
+using System;
 
 namespace Office365Statistics.ViewModel
 {
@@ -12,6 +13,8 @@ namespace Office365Statistics.ViewModel
         public AuthViewModel(IAuthenticationService authService)
         {
             _authService = authService;
+
+            AttemptAuthentication();
         }
 
         private bool _isLoading;
@@ -22,6 +25,7 @@ namespace Office365Statistics.ViewModel
             {
                 Set(ref _isLoading, value);
                 AuthenticateUser.RaiseCanExecuteChanged();
+                SignOutUser.RaiseCanExecuteChanged();
             }
         }
 
@@ -47,6 +51,7 @@ namespace Office365Statistics.ViewModel
             {
                 Set(ref _isAuthenticated, value);
                 AuthenticateUser.RaiseCanExecuteChanged();
+                SignOutUser.RaiseCanExecuteChanged();
             }
         }
 
@@ -84,6 +89,55 @@ namespace Office365Statistics.ViewModel
 
                 return _authenticateUser;
             }
+        }
+
+        private RelayCommand _signOutUser;
+        public RelayCommand SignOutUser
+        {
+            get
+            {
+                if (_signOutUser == null)
+                {
+                    _signOutUser = new RelayCommand(() =>
+                    {
+                        this.IsLoading = true;
+
+                        if (Client != null)
+                        {
+                            _authService.SignOut();
+                            IsAuthenticated = false;
+                        }
+
+                        this.IsLoading = false;
+
+                    },
+                    () => this.IsAuthenticated && !this.IsLoading);
+                }
+
+                return _signOutUser;
+            }
+        }
+
+        private async void AttemptAuthentication()
+        {
+            this.IsLoading = true;
+
+            try
+            {
+                Client = _authService.GetAuthenticatedClient(false);
+
+                if (Client != null)
+                {
+                    User = await Client.Me.Request().GetAsync();
+                    IsAuthenticated = true;
+                }
+            }
+            catch (Exception e) when (e is Microsoft.Identity.Client.MsalException || e is ServiceException)
+            {
+                IsAuthenticated = false;
+            }
+
+            this.IsLoading = false;
         }
     }
 }
